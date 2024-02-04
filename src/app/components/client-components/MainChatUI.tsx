@@ -1,11 +1,12 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { Box, Button, Avatar } from "@mui/joy";
+import { Box, Button, Avatar, Typography } from "@mui/joy";
 import DrawerScrollable from "./DrawerScrollable";
 import TopMenuBar from "./TopMenuBar";
 import ChatUI from "./ChatUI";
 import { Conversation } from "@/app/lib/types";
 import { v4 as uuidv4 } from 'uuid';
+import Footer from "./Footer";
 
 
 export default function MainChatUI() {
@@ -27,6 +28,7 @@ export default function MainChatUI() {
       <TopMenuBar />
       <DrawerScrollable conversations={conversations} updateConversationID={createNewConversationID} updateConversations={updateConversations}/>
       {conversationID && <ChatUI conversationID={conversationID}/>}
+      <Footer />
     </Box>
   );
 }
