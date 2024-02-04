@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import { useRef, useState, Fragment } from "react";
 import Avatar from "@mui/joy/Avatar";
 import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
@@ -23,7 +23,8 @@ export default function DrawerScrollable({
   conversations,
   updateConversations,
 }: DrawerProps) {
-  const [open, setOpen] = React.useState(false);
+  const conversationListHolderRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
 
   const createConvIDAndPushCurrentConvID = () => {
     let currentConvID = uuidv4();
@@ -37,7 +38,7 @@ export default function DrawerScrollable({
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Box>
         <IconButton size="lg" variant="plain" onClick={() => setOpen(true)}>
           <CiMenuBurger />
@@ -62,7 +63,15 @@ export default function DrawerScrollable({
           >
             New chat
           </Button>
-          <DialogContent>
+          <DialogContent
+            ref={conversationListHolderRef}
+            component={"div"}
+            sx={{
+              maxHeight: conversationListHolderRef.current?.clientHeight,
+              width: "100%",
+              overflowY: "auto",
+            }}
+          >
             <List>
               {conversations.map((conversation, index) => (
                 <ListItem key={index}>
@@ -106,6 +115,6 @@ export default function DrawerScrollable({
           </IconButton>
         </Box>
       </Drawer>
-    </React.Fragment>
+    </Fragment>
   );
 }

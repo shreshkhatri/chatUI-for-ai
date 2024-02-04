@@ -4,17 +4,15 @@ import { Box, Button, Avatar } from "@mui/joy";
 import DrawerScrollable from "./DrawerScrollable";
 import TopMenuBar from "./TopMenuBar";
 import ChatUI from "./ChatUI";
-import { useChat,Message} from "ai/react";
 import { Conversation } from "@/app/lib/types";
 import { v4 as uuidv4 } from 'uuid';
 
 
 export default function MainChatUI() {
-
-  const [conversations,updateConversations] = useState<Conversation[]>([]);
-  const [conversationID,createNewConversationID] = useState<string|undefined>(uuidv4());
-
+  const [conversationID,createNewConversationID] = useState<string>(uuidv4());
+  const [conversations,updateConversations] = useState<Conversation[]>([{conversationID:conversationID,title:'title'}]);
  
+
 
   return (
     <Box

@@ -10,30 +10,26 @@ export type PropUserMessage = {
   date: Date | undefined;
 };
 
-export type message={
-    role:'user'|'assistant',
-    content:string
-  }
+export type message = {
+  role: "user" | "assistant";
+  content: string;
+};
 
-  
-export interface APIMessageObjects{
-    messages:message[]
-  }
-
-
-  export type ChatUIProps = {
-    conversationID:string|undefined
-  }
-
-
-export type Conversation ={
-  title:string,
-  conversationID:string
+export interface APIMessageObjects {
+  messages: message[];
 }
 
+export type ChatUIProps = {
+  conversationID: string | undefined;
+};
+
+export type Conversation = {
+  title: string;
+  conversationID: string;
+};
 
 export type DrawerProps = {
-  updateConversationID: React.Dispatch<React.SetStateAction<string|undefined>>;
-  conversations:Conversation[];
+  updateConversationID: React.Dispatch<React.SetStateAction<string>>;
+  conversations: Conversation[];
   updateConversations: React.Dispatch<React.SetStateAction<Conversation[]>>;
-}
+};
