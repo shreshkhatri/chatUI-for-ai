@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import Avatar from "@mui/joy/Avatar";
 import Box from "@mui/joy/Box";
@@ -13,18 +14,36 @@ import { CiMenuBurger } from "react-icons/ci";
 import { IconButton } from "@mui/joy";
 import { FiLogOut } from "react-icons/fi";
 import { RiChatNewLine } from "react-icons/ri";
+import { DrawerProps } from "@/app/lib/types";
+import { v4 as uuidv4 } from "uuid";
+import ItemConversation from "./items/itemConversation";
 
-export default function DrawerScrollable() {
+export default function DrawerScrollable({
+  updateConversationID,
+  conversations,
+  updateConversations,
+}: DrawerProps) {
   const [open, setOpen] = React.useState(false);
+
+  const createConvIDAndPushCurrentConvID = () => {
+    let currentConvID = uuidv4();
+    updateConversationID(currentConvID);
+    updateConversations((conversations) => {
+      return [
+        { conversationID: currentConvID, title: "randomtitle" },
+        ...conversations,
+      ];
+    });
+  };
 
   return (
     <React.Fragment>
-      <Box >
-        <IconButton variant="plain" onClick={() => setOpen(true)}>
+      <Box>
+        <IconButton size="lg" variant="plain" onClick={() => setOpen(true)}>
           <CiMenuBurger />
         </IconButton>
       </Box>
-      <Drawer open={open} onClose={() => setOpen(false)} hideBackdrop={true}>
+      <Drawer open={open} onClose={() => setOpen(false)}>
         <ModalClose />
         <Box
           sx={{
@@ -39,15 +58,24 @@ export default function DrawerScrollable() {
             variant="outlined"
             color="success"
             startDecorator={<RiChatNewLine />}
+            onClick={() => createConvIDAndPushCurrentConvID()}
           >
             New chat
           </Button>
           <DialogContent>
             <List>
-              {[...new Array(10)].map((_, index) => (
+              {conversations.map((conversation, index) => (
                 <ListItem key={index}>
-                  <ListItemButton onClick={() => setOpen(false)}>
-                    chat {index}
+                  <ListItemButton
+                    onClick={() => {
+                      updateConversationID(conversation.conversationID);
+                      setOpen(false);
+                    }}
+                  >
+                    <ItemConversation
+                      conversationID={conversation.conversationID}
+                      title="d"
+                    />
                   </ListItemButton>
                 </ListItem>
               ))}
